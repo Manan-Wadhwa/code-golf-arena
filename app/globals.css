@@ -124,7 +124,7 @@ summary:focus-visible {
   gap: 20px;
   padding: 18px 14px;
   border-right: 1px solid var(--line);
-  background: rgba(8, 9, 8, 0.92);
+  background: rgba(14, 34, 22, 0.94);
   backdrop-filter: blur(18px);
 }
 
@@ -279,7 +279,7 @@ summary:focus-visible {
   gap: 16px;
   padding: 14px 22px;
   border-bottom: 1px solid var(--line);
-  background: rgba(8, 9, 8, 0.86);
+  background: rgba(18, 41, 28, 0.88);
   backdrop-filter: blur(18px);
 }
 
@@ -1034,7 +1034,7 @@ summary:focus-visible {
   gap: 16px;
   padding: 14px 18px;
   border-bottom: 1px solid var(--line);
-  background: rgba(8, 9, 8, 0.86);
+  background: rgba(18, 41, 28, 0.88);
 }
 
 .timeline {
@@ -2534,7 +2534,7 @@ summary:focus-visible {
   background:
     radial-gradient(circle, rgba(0, 0, 0, 0.14) 0 2.6px, transparent 3.4px) 0 0 / 15px 15px,
     radial-gradient(circle, rgba(0, 0, 0, 0.14) 0 2.6px, transparent 3.4px) 7.5px 7.5px / 15px 15px,
-    radial-gradient(circle at 34% 30%, #f5df88 0%, #d4af37 46%, #6b5519 100%);
+    radial-gradient(circle at 34% 30%, #fffaf0 0%, #ece6d8 46%, #9f9682 100%);
   box-shadow:
     inset -18px -22px 40px rgba(40, 30, 10, 0.35),
     10px 0 32px rgba(212, 175, 55, 0.18);
@@ -2542,7 +2542,7 @@ summary:focus-visible {
 
 ::selection {
   background: var(--gold-primary);
-  color: #0c0b08;
+  color: #12291c;
 }
 
 .unslop-landing {
@@ -2569,7 +2569,7 @@ summary:focus-visible {
 
 /* Highlighter swipe: a gold band that sweeps in behind the word */
 .hl {
-  color: #0c0b08;
+  color: #12291c;
   background: linear-gradient(var(--gold-primary), var(--gold-primary)) no-repeat
     0 58% / 100% 82%;
   padding: 0 0.08em;
@@ -2608,7 +2608,7 @@ summary:focus-visible {
 .unslop-tagline {
   font-size: 19px;
   line-height: 1.5;
-  color: #a8a69e;
+  color: #a3b5a7;
   max-width: 34ch;
   margin: 0;
 }
@@ -2648,7 +2648,7 @@ summary:focus-visible {
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: #a8a69e;
+  color: #a3b5a7;
   white-space: nowrap;
 }
 
@@ -2672,7 +2672,7 @@ summary:focus-visible {
 
 .unslop-label {
   font-size: 14px;
-  color: #a8a69e;
+  color: #a3b5a7;
 }
 
 .unslop-topic-chips {
@@ -2684,7 +2684,7 @@ summary:focus-visible {
 .unslop-topic-chip {
   background: none;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #a8a69e;
+  color: #a3b5a7;
   padding: 9px 15px;
   font: 600 15px var(--font-display);
   border-radius: 2px;
@@ -2706,7 +2706,7 @@ summary:focus-visible {
 .unslop-btn-gold {
   width: 100%;
   background: var(--gold-primary);
-  color: #0c0b08;
+  color: #12291c;
   font: 700 19px var(--font-display);
   padding: 19px 20px;
   border: 0;
@@ -2757,7 +2757,7 @@ summary:focus-visible {
 }
 
 .unslop-input-code::placeholder {
-  color: #4a473e;
+  color: #5d7a68;
 }
 
 .unslop-btn-outline {
@@ -2815,4 +2815,34 @@ summary:focus-visible {
   .unslop-console-title {
     font-size: 32px;
   }
+}
+
+/* Green course theme: same gold, played on felt-green instead of obsidian */
+:root {
+  --bg: #12291c;
+  --bg-soft: #163222;
+  --panel: #1b3a28;
+  --panel-soft: #163222;
+  --line: #2f503b;
+  --line-strong: #3f684e;
+  --text: #efe8d6;
+  --muted: #a3b5a7;
+  --muted-strong: #c2d1c6;
+  --carbon-900: #0e2216;
+  --carbon-800: #1b3a28;
+  --carbon-700: #163222;
+  --carbon-line: #2f503b;
+}
+
+body {
+  background:
+    linear-gradient(rgba(239, 232, 214, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 232, 214, 0.022) 1px, transparent 1px),
+    radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.07), transparent 40rem),
+    var(--bg);
+  background-size: 34px 34px;
+}
+
+.unslop-console {
+  box-shadow: 0 24px 64px rgba(4, 14, 8, 0.45);
 }

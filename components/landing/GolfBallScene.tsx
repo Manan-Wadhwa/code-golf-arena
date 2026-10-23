@@ -6,7 +6,6 @@ import { mergeVertices } from "three/addons/utils/BufferGeometryUtils.js";
 import { DecalGeometry } from "three/addons/geometries/DecalGeometry.js";
 
 const GOLD = "#d4af37";
-const ENGRAVE = "#17130a";
 const DIMPLE_COUNT = 332;
 const DIMPLE_DEPTH = 0.022;
 const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
@@ -89,7 +88,7 @@ function createPrintTexture() {
 
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillStyle = ENGRAVE;
+  ctx.fillStyle = GOLD;
   ctx.font = "italic 400 230px Georgia, 'Times New Roman', serif";
   ctx.fillText("Arena", 512, 210);
   ctx.font = "700 64px ui-monospace, 'SFMono-Regular', Consolas, monospace";
@@ -102,7 +101,7 @@ function createPrintTexture() {
 }
 
 /**
- * Flat equirectangular "studio": warm softboxes over a dark floor. Metal is
+ * Flat equirectangular "studio": warm softboxes over a green floor. Metal is
  * only as good as what it reflects, so this is what gives the gold its shape.
  */
 function createStudioTexture() {
@@ -112,9 +111,9 @@ function createStudioTexture() {
   const ctx = canvas.getContext("2d");
   if (!ctx) return null;
 
-  ctx.fillStyle = "#0b0a07";
+  ctx.fillStyle = "#0c1a12";
   ctx.fillRect(0, 0, 1024, 512);
-  ctx.fillStyle = "#2a2312";
+  ctx.fillStyle = "#1d4a2e";
   ctx.fillRect(0, 300, 1024, 212);
   ctx.fillStyle = "#fff4dc";
   ctx.fillRect(120, 70, 250, 150);
@@ -122,7 +121,7 @@ function createStudioTexture() {
   ctx.fillRect(640, 40, 40, 280);
   ctx.fillStyle = "#b98324";
   ctx.fillRect(820, 150, 130, 60);
-  ctx.fillStyle = "#5a4a2a";
+  ctx.fillStyle = "#3d5a3a";
   ctx.fillRect(430, 110, 120, 40);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -185,7 +184,7 @@ export function GolfBallScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(container.clientWidth, container.clientHeight, false);
     renderer.toneMapping = THREE.NeutralToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = 1.12;
     container.appendChild(renderer.domElement);
 
     const pmrem = new THREE.PMREMGenerator(renderer);
@@ -195,7 +194,7 @@ export function GolfBallScene() {
       : null;
     studioTexture?.dispose();
     scene.environment = environment;
-    scene.environmentIntensity = 1.1;
+    scene.environmentIntensity = 0.45;
 
     const stage = new THREE.Group();
     scene.add(stage);
@@ -203,22 +202,21 @@ export function GolfBallScene() {
     // Ball
     const ballGeometry = buildGolfBallGeometry(compact ? 72 : 110);
     const ballMaterial = new THREE.MeshPhysicalMaterial({
-      color: GOLD,
-      metalness: 1,
-      roughness: 0.32,
-      clearcoat: 0.35,
-      clearcoatRoughness: 0.2,
+      color: "#ffffff",
+      roughness: 0.42,
+      clearcoat: 1,
+      clearcoatRoughness: 0.14,
     });
     const ball = new THREE.Mesh(ballGeometry, ballMaterial);
     stage.add(ball);
 
-    // Engraved print, projected onto the dimpled surface so it follows the indents.
+    // Gold print, projected onto the dimpled surface so it follows the indents.
     const printTexture = createPrintTexture();
     const printMaterial = new THREE.MeshStandardMaterial({
       map: printTexture,
       transparent: true,
-      metalness: 0.2,
-      roughness: 0.6,
+      metalness: 0.85,
+      roughness: 0.3,
       depthWrite: false,
       polygonOffset: true,
       polygonOffsetFactor: -4,
@@ -240,9 +238,9 @@ export function GolfBallScene() {
 
     const ringGeometry = new THREE.TorusGeometry(1.7, 0.0055, 8, 240);
     const ringMaterial = new THREE.MeshBasicMaterial({
-      color: "#f5df88",
+      color: GOLD,
       transparent: true,
-      opacity: 0.4,
+      opacity: 0.55,
     });
     orbit.add(new THREE.Mesh(ringGeometry, ringMaterial));
 
@@ -271,10 +269,10 @@ export function GolfBallScene() {
     scene.add(shadow);
 
     // Lighting: a low, warm key rakes across the dimples; a pale rim outlines the ball.
-    scene.add(new THREE.HemisphereLight(0xfff4dc, 0x1a140a, 0.4));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x0c1a12, 0.55));
 
     const keyBase = new THREE.Vector3(-3.5, 3.2, 2.6);
-    const keyLight = new THREE.DirectionalLight(0xffe4b0, 2.2);
+    const keyLight = new THREE.DirectionalLight(0xfff7ec, 2.4);
     keyLight.position.copy(keyBase);
     scene.add(keyLight);
 
