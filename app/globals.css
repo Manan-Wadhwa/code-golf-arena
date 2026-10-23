@@ -2128,34 +2128,77 @@ summary:focus-visible {
   font-family: var(--font-mono);
 }
 
-.submission-example-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+.problem-detail-list p code {
+  display: inline;
+  padding: 1px 5px;
+  border-radius: 2px;
+  font-size: 11px;
 }
 
-.submission-example {
+.submission-examples {
   min-width: 0;
   display: grid;
-  gap: 8px;
 }
 
-.submission-example strong {
+.submission-tabs {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.submission-tab {
+  flex: none;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  border-radius: 2px 2px 0 0;
+  background: none;
+  color: var(--muted);
   font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.submission-example pre {
-  margin: 0;
-  padding: 12px;
+.submission-tab:hover {
+  color: var(--text);
+}
+
+.submission-tab[aria-selected="true"] {
+  border-color: var(--line);
+  background: #090a08;
+  color: var(--accent);
+  box-shadow: inset 0 2px 0 var(--accent);
+}
+
+.submission-code {
+  margin: -1px 0 0;
+  padding: 14px 16px;
   overflow-x: auto;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 0 2px 2px 2px;
   background: #090a08;
   color: var(--text);
   font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.55;
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 4;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.submission-code::-webkit-scrollbar {
+  height: 8px;
+}
+
+.submission-code::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.submission-code::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: var(--line-strong);
 }
 
 .problem-facts {
@@ -2435,10 +2478,6 @@ summary:focus-visible {
   .problem-facts,
   .form-grid,
   .admin-filters,
-  .submission-example-grid {
-    grid-template-columns: 1fr;
-  }
-
   .field-wide {
     grid-column: auto;
   }

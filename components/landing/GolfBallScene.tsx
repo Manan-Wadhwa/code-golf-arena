@@ -184,7 +184,7 @@ export function GolfBallScene() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(container.clientWidth, container.clientHeight, false);
     renderer.toneMapping = THREE.NeutralToneMapping;
-    renderer.toneMappingExposure = 1.12;
+    renderer.toneMappingExposure = 1.05;
     container.appendChild(renderer.domElement);
 
     const pmrem = new THREE.PMREMGenerator(renderer);
@@ -202,7 +202,7 @@ export function GolfBallScene() {
     // Ball
     const ballGeometry = buildGolfBallGeometry(compact ? 72 : 110);
     const ballMaterial = new THREE.MeshPhysicalMaterial({
-      color: "#ffffff",
+      color: "#f3efe6",
       roughness: 0.42,
       clearcoat: 1,
       clearcoatRoughness: 0.14,
@@ -269,10 +269,10 @@ export function GolfBallScene() {
     scene.add(shadow);
 
     // Lighting: a low, warm key rakes across the dimples; a pale rim outlines the ball.
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x0c1a12, 0.55));
+    scene.add(new THREE.HemisphereLight(0xfff4dc, 0x0c1a12, 0.4));
 
     const keyBase = new THREE.Vector3(-3.5, 3.2, 2.6);
-    const keyLight = new THREE.DirectionalLight(0xfff7ec, 2.4);
+    const keyLight = new THREE.DirectionalLight(0xffe4b0, 2.2);
     keyLight.position.copy(keyBase);
     scene.add(keyLight);
 
