@@ -15,29 +15,17 @@ import {
 import { useSocketConnection } from "@/hooks/useSocketConnection";
 import { useTransientMessage } from "@/hooks/useTransientMessage";
 
-// Dynamically import the Three.js gold kinetic scene with SSR disabled
-const GoldArenaScene = dynamic(
+// Three.js golf ball scene, client-only
+const GolfBallScene = dynamic(
   () =>
-    import("@/components/landing/GoldArenaScene").then(
-      (mod) => mod.GoldArenaScene,
+    import("@/components/landing/GolfBallScene").then(
+      (mod) => mod.GolfBallScene,
     ),
   {
     ssr: false,
     loading: () => (
-      <div
-        className="gold-scene-fallback"
-        aria-label="Loading 3D Gold Arena sculpture…"
-      >
-        <div
-          style={{
-            width: 32,
-            height: 32,
-            border: "2px solid rgba(212, 175, 55, 0.2)",
-            borderTopColor: "#d4af37",
-            borderRadius: "50%",
-            animation: "spin 1s linear infinite",
-          }}
-        />
+      <div className="gold-scene-fallback" aria-label="Loading 3D golf ball…">
+        <div className="golf-ball-flat" />
       </div>
     ),
   },
@@ -46,7 +34,7 @@ const GoldArenaScene = dynamic(
 type TopicChoice = ProblemTopic | "random";
 
 const topicOptions: Array<{ value: TopicChoice; label: string }> = [
-  { value: "random", label: "Any" },
+  { value: "random", label: "Random" },
   { value: "arrays", label: "Arrays" },
   { value: "strings", label: "Strings" },
   { value: "math", label: "Math" },
@@ -168,34 +156,36 @@ export default function HomePage() {
       </span>
 
       <section className="unslop-landing">
-        {/* Left Stage: 3JS Interactive Scene + Editorial Craft */}
+        {/* Left: 3D golf ball and headline */}
         <section className="unslop-stage" aria-label="Interactive Arena Display">
-          <GoldArenaScene />
+          <GolfBallScene />
 
           <div className="unslop-copy-block">
             <h1 className="unslop-heading">
-              Code Golf <span className="gold-word">Arena</span>
+              Write it <span className="hl">shorter.</span>
             </h1>
             <p className="unslop-tagline">
-              Shortest accepted code wins. Multi-language deterministic execution
-              measured in UTF-8 bytes and runtime.
+              Head-to-head code golf. Same problem, same judge,{" "}
+              <span className="hl-soft">fewest characters wins.</span>
             </p>
           </div>
         </section>
 
-        {/* Right Stage: Gold Command Console */}
+        {/* Right: round controls */}
         <aside className="unslop-rail" aria-label="Round Controls">
           <section className="unslop-console">
             <header className="unslop-console-header">
-              <span className="unslop-console-title">New Session</span>
-              <span className="unslop-console-status">
-                {connected ? "READY TO DISPATCH" : "STANDBY"}
+              <h2 className="unslop-console-title">Start a round</h2>
+              <span
+                className={`unslop-console-status ${connected ? "online" : ""}`}
+              >
+                {connected ? "Online" : "Reconnecting"}
               </span>
             </header>
 
             {/* Topic selection chips */}
             <div className="unslop-field-group">
-              <span className="unslop-label">Algorithm Topic</span>
+              <span className="unslop-label">Topic</span>
               <div className="unslop-topic-chips" role="radiogroup" aria-label="Problem topic">
                 {topicOptions.map((option) => {
                   const isSelected = selectedTopic === option.value;
@@ -205,7 +195,7 @@ export default function HomePage() {
                       type="button"
                       role="radio"
                       aria-checked={isSelected}
-                      className={`unslop-topic-chip ${isSelected ? "selected" : ""}`}
+                      className="unslop-topic-chip"
                       onClick={() => setSelectedTopic(option.value)}
                       disabled={Boolean(pendingAction)}
                     >
@@ -216,17 +206,15 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Create Room Primary Trigger */}
             <button
               type="button"
               className="unslop-btn-gold"
               onClick={createRoom}
               disabled={Boolean(pendingAction) || !connected}
             >
-              {pendingAction === "create" ? "Initializing Arena…" : "Create Head-to-Head Arena"}
+              {pendingAction === "create" ? "Creating room…" : "Create room"}
             </button>
 
-            {/* Join / Solo Practice Section */}
             <form
               className="unslop-join-section"
               noValidate
@@ -236,55 +224,55 @@ export default function HomePage() {
               }}
             >
               <label className="unslop-label" htmlFor="room-code">
-                Join by Room Code
+                Or join a friend
               </label>
-              <input
-                id="room-code"
-                className="unslop-input-code"
-                value={joinCode}
-                onChange={(event) => {
-                  setJoinCode(
-                    event.target.value
-                      .replace(/[^a-z0-9]/gi, "")
-                      .toUpperCase()
-                      .slice(0, 8),
-                  );
-                  setJoinError("");
-                }}
-                placeholder="ABCD2345"
-                maxLength={8}
-                minLength={8}
-                pattern="[A-Za-z0-9]{8}"
-                autoComplete="off"
-                autoCapitalize="characters"
-                spellCheck={false}
-                aria-invalid={Boolean(joinError)}
-                aria-describedby={joinError ? "room-code-error" : undefined}
-              />
-              {joinError && (
-                <span className="field-error" id="room-code-error" role="alert">
-                  {joinError}
-                </span>
-              )}
-
-              <div className="unslop-actions-row">
+              <div className="unslop-join-row">
+                <input
+                  id="room-code"
+                  className="unslop-input-code"
+                  value={joinCode}
+                  onChange={(event) => {
+                    setJoinCode(
+                      event.target.value
+                        .replace(/[^a-z0-9]/gi, "")
+                        .toUpperCase()
+                        .slice(0, 8),
+                    );
+                    setJoinError("");
+                  }}
+                  placeholder="ABCD2345"
+                  maxLength={8}
+                  minLength={8}
+                  pattern="[A-Za-z0-9]{8}"
+                  autoComplete="off"
+                  autoCapitalize="characters"
+                  spellCheck={false}
+                  aria-invalid={Boolean(joinError)}
+                  aria-describedby={joinError ? "room-code-error" : undefined}
+                />
                 <button
                   type="submit"
                   className="unslop-btn-outline"
                   disabled={Boolean(pendingAction) || !connected}
                 >
-                  {pendingAction === "join" ? "Connecting…" : "Join Room"}
-                </button>
-                <button
-                  type="button"
-                  className="unslop-btn-outline"
-                  onClick={startSolo}
-                  disabled={Boolean(pendingAction) || !connected}
-                >
-                  {pendingAction === "solo" ? "Launching…" : "Solo Practice"}
+                  {pendingAction === "join" ? "Joining…" : "Join"}
                 </button>
               </div>
+              {joinError && (
+                <span className="field-error" id="room-code-error" role="alert">
+                  {joinError}
+                </span>
+              )}
             </form>
+
+            <button
+              type="button"
+              className="unslop-link-btn"
+              onClick={startSolo}
+              disabled={Boolean(pendingAction) || !connected}
+            >
+              {pendingAction === "solo" ? "Starting practice…" : "Practice alone"}
+            </button>
           </section>
         </aside>
       </section>
