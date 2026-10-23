@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { socket } from "@/lib/socket";
 import { SocketEvents } from "@/shared/events";
@@ -8,17 +9,44 @@ import type { ProblemTopic } from "@/types/domain";
 import {
   ConnectionStatus,
   PremiumShell,
-  SurfaceCard,
   ToastRegion,
   TopNav,
 } from "@/components/ui/PremiumShell";
 import { useSocketConnection } from "@/hooks/useSocketConnection";
 import { useTransientMessage } from "@/hooks/useTransientMessage";
 
+// Dynamically import the Three.js gold kinetic scene with SSR disabled
+const GoldArenaScene = dynamic(
+  () =>
+    import("@/components/landing/GoldArenaScene").then(
+      (mod) => mod.GoldArenaScene,
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="gold-scene-fallback"
+        aria-label="Loading 3D Gold Arena sculpture…"
+      >
+        <div
+          style={{
+            width: 32,
+            height: 32,
+            border: "2px solid rgba(212, 175, 55, 0.2)",
+            borderTopColor: "#d4af37",
+            borderRadius: "50%",
+            animation: "spin 1s linear infinite",
+          }}
+        />
+      </div>
+    ),
+  },
+);
+
 type TopicChoice = ProblemTopic | "random";
 
 const topicOptions: Array<{ value: TopicChoice; label: string }> = [
-  { value: "random", label: "Random" },
+  { value: "random", label: "Any" },
   { value: "arrays", label: "Arrays" },
   { value: "strings", label: "Strings" },
   { value: "math", label: "Math" },
@@ -115,15 +143,15 @@ export default function HomePage() {
             <span className={connected ? "" : "offline"} />
           </div>
           <div>
-            <strong>Realtime server</strong>
+            <strong>Realtime Engine</strong>
             <span>{connected ? "connected" : "reconnecting"}</span>
           </div>
         </>
       }
       topbar={
         <TopNav
-          eyebrow="Code Golf Arena"
-          title="Start a round"
+          eyebrow="Multiplayer Competitive Golf"
+          title="Matchmaking Arena"
           actions={<ConnectionStatus connected={connected} />}
         />
       }
@@ -139,119 +167,125 @@ export default function HomePage() {
               : ""}
       </span>
 
-      <section className="home-grid">
-        <section className="home-main">
-          <div className="home-intro">
-            <div className="eyebrow">Shortest accepted code wins</div>
-            <h1>Compete on characters, not dashboards.</h1>
-            <p>
-              Create a head-to-head room, join with an eight-character code, or
-              start a solo practice session against the same judge.
+      <section className="unslop-landing">
+        {/* Left Stage: 3JS Interactive Scene + Editorial Craft */}
+        <section className="unslop-stage" aria-label="Interactive Arena Display">
+          <GoldArenaScene />
+
+          <div className="unslop-copy-block">
+            <h1 className="unslop-heading">
+              Code Golf <span className="gold-word">Arena</span>
+            </h1>
+            <p className="unslop-tagline">
+              Shortest accepted code wins. Multi-language deterministic execution
+              measured in UTF-8 bytes and runtime.
             </p>
           </div>
         </section>
 
-        <aside className="home-rail" aria-label="Round controls">
-          <SurfaceCard className="room-panel command-panel">
-            <div className="stack">
-              <div>
-                <div className="eyebrow">new session</div>
-                <h2>New round</h2>
-                <p className="muted">
-                  Pick a topic. Create a room, join by code, or play alone.
-                </p>
-              </div>
+        {/* Right Stage: Gold Command Console */}
+        <aside className="unslop-rail" aria-label="Round Controls">
+          <section className="unslop-console">
+            <header className="unslop-console-header">
+              <span className="unslop-console-title">New Session</span>
+              <span className="unslop-console-status">
+                {connected ? "READY TO DISPATCH" : "STANDBY"}
+              </span>
+            </header>
 
-              <div className="stack">
-                <label className="form-label" htmlFor="topic-select">
-                  Problem topic
-                </label>
-                <select
-                  id="topic-select"
-                  className="select"
-                  value={selectedTopic}
-                  onChange={(event) =>
-                    setSelectedTopic(event.target.value as TopicChoice)
-                  }
-                  disabled={Boolean(pendingAction)}
-                >
-                  {topicOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
+            {/* Topic selection chips */}
+            <div className="unslop-field-group">
+              <span className="unslop-label">Algorithm Topic</span>
+              <div className="unslop-topic-chips" role="radiogroup" aria-label="Problem topic">
+                {topicOptions.map((option) => {
+                  const isSelected = selectedTopic === option.value;
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      role="radio"
+                      aria-checked={isSelected}
+                      className={`unslop-topic-chip ${isSelected ? "selected" : ""}`}
+                      onClick={() => setSelectedTopic(option.value)}
+                      disabled={Boolean(pendingAction)}
+                    >
                       {option.label}
-                    </option>
-                  ))}
-                </select>
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              <button
-                type="button"
-                className="button button-primary"
-                onClick={createRoom}
-                disabled={Boolean(pendingAction) || !connected}
-              >
-                {pendingAction === "create" ? "creating room…" : "create room"}
-              </button>
+            {/* Create Room Primary Trigger */}
+            <button
+              type="button"
+              className="unslop-btn-gold"
+              onClick={createRoom}
+              disabled={Boolean(pendingAction) || !connected}
+            >
+              {pendingAction === "create" ? "Initializing Arena…" : "Create Head-to-Head Arena"}
+            </button>
 
-              <form
-                className="stack"
-                noValidate
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  joinRoom();
+            {/* Join / Solo Practice Section */}
+            <form
+              className="unslop-join-section"
+              noValidate
+              onSubmit={(event) => {
+                event.preventDefault();
+                joinRoom();
+              }}
+            >
+              <label className="unslop-label" htmlFor="room-code">
+                Join by Room Code
+              </label>
+              <input
+                id="room-code"
+                className="unslop-input-code"
+                value={joinCode}
+                onChange={(event) => {
+                  setJoinCode(
+                    event.target.value
+                      .replace(/[^a-z0-9]/gi, "")
+                      .toUpperCase()
+                      .slice(0, 8),
+                  );
+                  setJoinError("");
                 }}
-              >
-                <label className="form-label" htmlFor="room-code">
-                  Room code
-                </label>
-                <input
-                  id="room-code"
-                  className="input"
-                  value={joinCode}
-                  onChange={(event) => {
-                    setJoinCode(
-                      event.target.value
-                        .replace(/[^a-z0-9]/gi, "")
-                        .toUpperCase()
-                        .slice(0, 8),
-                    );
-                    setJoinError("");
-                  }}
-                  placeholder="ABCD2345"
-                  maxLength={8}
-                  minLength={8}
-                  pattern="[A-Za-z0-9]{8}"
-                  autoComplete="off"
-                  autoCapitalize="characters"
-                  spellCheck={false}
-                  aria-invalid={Boolean(joinError)}
-                  aria-describedby={joinError ? "room-code-error" : "room-code-help"}
-                />
-                <span className="field-help" id="room-code-help">
-                  Codes use eight letters or numbers.
+                placeholder="ABCD2345"
+                maxLength={8}
+                minLength={8}
+                pattern="[A-Za-z0-9]{8}"
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+                aria-invalid={Boolean(joinError)}
+                aria-describedby={joinError ? "room-code-error" : undefined}
+              />
+              {joinError && (
+                <span className="field-error" id="room-code-error" role="alert">
+                  {joinError}
                 </span>
-                {joinError && (
-                  <span className="field-error" id="room-code-error" role="alert">
-                    {joinError}
-                  </span>
-                )}
+              )}
+
+              <div className="unslop-actions-row">
                 <button
                   type="submit"
-                  className="button button-green"
+                  className="unslop-btn-outline"
                   disabled={Boolean(pendingAction) || !connected}
                 >
-                  {pendingAction === "join" ? "joining room…" : "join room"}
+                  {pendingAction === "join" ? "Connecting…" : "Join Room"}
                 </button>
                 <button
                   type="button"
-                  className="button"
+                  className="unslop-btn-outline"
                   onClick={startSolo}
                   disabled={Boolean(pendingAction) || !connected}
                 >
-                  {pendingAction === "solo" ? "starting practice…" : "solo practice"}
+                  {pendingAction === "solo" ? "Launching…" : "Solo Practice"}
                 </button>
-              </form>
-            </div>
-          </SurfaceCard>
+              </div>
+            </form>
+          </section>
         </aside>
       </section>
     </PremiumShell>
