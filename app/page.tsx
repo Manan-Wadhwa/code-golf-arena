@@ -15,29 +15,20 @@ import {
 import { useSocketConnection } from "@/hooks/useSocketConnection";
 import { useTransientMessage } from "@/hooks/useTransientMessage";
 
-// Dynamically import the Three.js gold kinetic scene with SSR disabled
-const GoldArenaScene = dynamic(
+// Dynamically import the Three.js heavy metal golf ball scene (client-only)
+const GolfBallScene = dynamic(
   () =>
-    import("@/components/landing/GoldArenaScene").then(
-      (mod) => mod.GoldArenaScene,
+    import("@/components/landing/GolfBallScene").then(
+      (mod) => mod.GolfBallScene,
     ),
   {
     ssr: false,
     loading: () => (
       <div
-        className="gold-scene-fallback"
-        aria-label="Loading 3D Gold Arena sculpture…"
+        className="golf-ball-fallback"
+        aria-label="Loading 3D brass golf ball…"
       >
-        <div
-          style={{
-            width: 32,
-            height: 32,
-            border: "2px solid rgba(212, 175, 55, 0.2)",
-            borderTopColor: "#d4af37",
-            borderRadius: "50%",
-            animation: "spin 1s linear infinite",
-          }}
-        />
+        <div className="flat-gold-ball" />
       </div>
     ),
   },
@@ -150,8 +141,8 @@ export default function HomePage() {
       }
       topbar={
         <TopNav
-          eyebrow="Multiplayer Competitive Golf"
-          title="Matchmaking Arena"
+          eyebrow="Printed Scorecard · Metal Ball"
+          title="Start a round"
           actions={<ConnectionStatus connected={connected} />}
         />
       }
@@ -168,34 +159,45 @@ export default function HomePage() {
       </span>
 
       <section className="unslop-landing">
-        {/* Left Stage: 3JS Interactive Scene + Editorial Craft */}
+        {/* Left Stage: 3JS Heavy Metal Golf Ball + Scorecard Statement */}
         <section className="unslop-stage" aria-label="Interactive Arena Display">
-          <GoldArenaScene />
+          <GolfBallScene />
 
           <div className="unslop-copy-block">
             <h1 className="unslop-heading">
-              Code Golf <span className="gold-word">Arena</span>
+              Write it <span className="gold-word">shorter.</span>
             </h1>
             <p className="unslop-tagline">
-              Shortest accepted code wins. Multi-language deterministic execution
-              measured in UTF-8 bytes and runtime.
+              Head-to-head code golf. Same problem, same judge, fewest characters wins.
             </p>
+
+            <div className="unslop-telemetry">
+              <span className="unslop-telemetry-tag">
+                <strong>61</strong> problems in catalog
+              </span>
+              <span className="unslop-telemetry-tag">
+                <strong>Docker</strong> hardened sandbox
+              </span>
+              <span className="unslop-telemetry-tag">
+                <strong>UTF-8</strong> byte scoring
+              </span>
+            </div>
           </div>
         </section>
 
-        {/* Right Stage: Gold Command Console */}
+        {/* Right Stage: Printed Scorecard Control Console */}
         <aside className="unslop-rail" aria-label="Round Controls">
           <section className="unslop-console">
             <header className="unslop-console-header">
-              <span className="unslop-console-title">New Session</span>
+              <span className="unslop-console-title">Start a round</span>
               <span className="unslop-console-status">
-                {connected ? "READY TO DISPATCH" : "STANDBY"}
+                {connected ? "ONLINE" : "RECONNECTING…"}
               </span>
             </header>
 
             {/* Topic selection chips */}
             <div className="unslop-field-group">
-              <span className="unslop-label">Algorithm Topic</span>
+              <span className="unslop-label">Problem Topic</span>
               <div className="unslop-topic-chips" role="radiogroup" aria-label="Problem topic">
                 {topicOptions.map((option) => {
                   const isSelected = selectedTopic === option.value;
@@ -216,14 +218,14 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Create Room Primary Trigger */}
+            {/* Create Room Primary Trigger (Gold action) */}
             <button
               type="button"
               className="unslop-btn-gold"
               onClick={createRoom}
               disabled={Boolean(pendingAction) || !connected}
             >
-              {pendingAction === "create" ? "Initializing Arena…" : "Create Head-to-Head Arena"}
+              {pendingAction === "create" ? "Creating room…" : "Create room"}
             </button>
 
             {/* Join / Solo Practice Section */}
@@ -273,7 +275,7 @@ export default function HomePage() {
                   className="unslop-btn-outline"
                   disabled={Boolean(pendingAction) || !connected}
                 >
-                  {pendingAction === "join" ? "Connecting…" : "Join Room"}
+                  {pendingAction === "join" ? "Joining…" : "Join"}
                 </button>
                 <button
                   type="button"
@@ -281,7 +283,7 @@ export default function HomePage() {
                   onClick={startSolo}
                   disabled={Boolean(pendingAction) || !connected}
                 >
-                  {pendingAction === "solo" ? "Launching…" : "Solo Practice"}
+                  {pendingAction === "solo" ? "Starting…" : "Practice alone"}
                 </button>
               </div>
             </form>

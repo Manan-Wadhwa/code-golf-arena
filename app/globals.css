@@ -1,25 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght,wdth@400..900,62..125&family=Azeret+Mono:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg: #080908;
-  --bg-soft: #0d0f0d;
-  --panel: #11130f;
-  --panel-soft: #151812;
-  --line: rgba(212, 212, 196, 0.13);
-  --line-strong: rgba(212, 212, 196, 0.25);
-  --text: #e4e1d2;
-  --muted: #969383;
-  --muted-strong: #bbb6a2;
-  --accent: #d7b65d;
-  --good: #9ccc65;
-  --bad: #ef6f61;
-  --shadow: 0 18px 52px rgba(3, 5, 3, 0.38);
-  --shadow-soft: 0 10px 30px rgba(3, 5, 3, 0.22);
-  --radius: 8px;
-  --radius-large: 12px;
-  --font-sans: var(--font-sans-loaded), ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: var(--font-mono-loaded), "SFMono-Regular", Consolas, monospace;
+  --bg: #12291c;
+  --bg2: #1b3a28;
+  --bg-soft: #163222;
+  --panel: #1b3a28;
+  --panel-soft: #163222;
+  --ink: #efe8d6;
+  --text: #efe8d6;
+  --mute: #a3b5a7;
+  --muted: #a3b5a7;
+  --muted-strong: #c2d1c6;
+  --gold: #d4a843;
+  --accent: #d4a843;
+  --line: #2f503b;
+  --line-strong: #3f684e;
+  --bad: #e0775f;
+  --good: #87c595;
+  --shadow: none;
+  --shadow-soft: none;
+  --radius: 2px;
+  --radius-large: 2px;
+  --font-sans: "Archivo", var(--font-sans-loaded), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "Azeret Mono", var(--font-mono-loaded), "SFMono-Regular", Consolas, monospace;
 }
 
 @theme inline {
@@ -33,24 +37,11 @@
 
 html,
 body {
-  min-height: 100%;
-}
-
-html {
-  color-scheme: dark;
-  scroll-behavior: smooth;
-}
-
-body {
   margin: 0;
-  background:
-    linear-gradient(rgba(228, 225, 210, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(228, 225, 210, 0.018) 1px, transparent 1px),
-    radial-gradient(circle at 70% -10%, rgba(215, 182, 93, 0.08), transparent 38rem),
-    var(--bg);
-  background-size: 34px 34px;
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
+  font-size: 16px;
 }
 
 .skip-link {
@@ -2451,21 +2442,18 @@ summary:focus-visible {
 
 
 /* ==========================================================================
-   UNSLOP UI & GOLD THREE.JS LANDING SYSTEM
-   Human-crafted, Awwwards Site of the Day Caliber, Zero AI Slop
+   GOLF COURSE GREEN & BRASS SCORECARD SYSTEM
+   Flat colours only. 2px radius. Heavy metal gold golf ball.
    ========================================================================== */
 
 :root {
-  --gold-primary: #d4af37;
-  --gold-bright: #f5df88;
-  --gold-muted: #8c7326;
-  --gold-subtle: rgba(212, 175, 55, 0.12);
-  --gold-border: rgba(212, 175, 55, 0.28);
-  --gold-border-bright: rgba(245, 223, 136, 0.55);
-  --carbon-900: #08080a;
-  --carbon-800: #0f1013;
-  --carbon-700: #16181d;
-  --carbon-line: rgba(255, 255, 255, 0.08);
+  --gold-primary: #d4a843;
+  --gold-bright: #e5ba55;
+  --gold-muted: #8c7028;
+  --carbon-900: #12291c;
+  --carbon-800: #1b3a28;
+  --carbon-700: #163222;
+  --carbon-line: #2f503b;
 }
 
 .unslop-landing {
@@ -2493,7 +2481,7 @@ summary:focus-visible {
   min-height: 480px;
 }
 
-.gold-scene-container {
+.golf-ball-container {
   width: 100%;
   height: 440px;
   position: relative;
@@ -2501,11 +2489,11 @@ summary:focus-visible {
   touch-action: none;
 }
 
-.gold-scene-container:active {
+.golf-ball-container:active {
   cursor: grabbing;
 }
 
-.gold-scene-fallback {
+.golf-ball-fallback {
   width: 100%;
   height: 380px;
   display: flex;
@@ -2513,10 +2501,12 @@ summary:focus-visible {
   justify-content: center;
 }
 
-.gold-fallback-svg {
-  width: 180px;
-  height: 180px;
-  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+.flat-gold-ball {
+  width: 160px;
+  height: 160px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid #b88d30;
 }
 
 .unslop-copy-block {
@@ -2529,24 +2519,20 @@ summary:focus-visible {
   font-size: clamp(38px, 5.2vw, 72px);
   line-height: 0.95;
   letter-spacing: -0.04em;
-  color: #f7f7f5;
+  color: var(--ink);
   margin: 0 0 16px;
   text-transform: uppercase;
 }
 
 .unslop-heading span.gold-word {
-  color: var(--gold-primary);
+  color: var(--gold);
   display: inline-block;
-  font-style: italic;
-  font-family: "Georgia", serif;
-  font-weight: 400;
-  letter-spacing: -0.01em;
 }
 
 .unslop-tagline {
-  font-size: 18px;
-  line-height: 1.5;
-  color: #a8a69e;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--mute);
   max-width: 520px;
   margin: 0 0 20px;
 }
@@ -2558,7 +2544,6 @@ summary:focus-visible {
   gap: 10px;
   font-family: var(--font-mono);
   font-size: 11px;
-  color: #7b786d;
 }
 
 .unslop-telemetry-tag {
@@ -2566,22 +2551,22 @@ summary:focus-visible {
   align-items: center;
   gap: 6px;
   padding: 5px 10px;
-  border: 1px solid var(--carbon-line);
-  background: rgba(15, 16, 19, 0.6);
-  border-radius: 4px;
-  color: #bbb8aa;
+  border: 1px solid var(--line);
+  background: var(--bg2);
+  border-radius: 2px;
+  color: var(--mute);
 }
 
 .unslop-telemetry-tag strong {
-  color: var(--gold-primary);
+  color: var(--gold);
 }
 
 .unslop-console {
-  background: var(--carbon-800);
-  border: 1px solid var(--gold-border);
-  border-radius: 8px;
+  background: var(--bg2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
   padding: 28px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(212, 175, 55, 0.15);
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -2592,23 +2577,23 @@ summary:focus-visible {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  border-bottom: 1px solid var(--line);
   padding-bottom: 14px;
 }
 
 .unslop-console-title {
-  font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 700;
-  color: #f7f7f5;
-  letter-spacing: 0.08em;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .unslop-console-status {
   font-family: var(--font-mono);
   font-size: 11px;
-  color: var(--gold-primary);
+  color: var(--gold);
 }
 
 .unslop-field-group {
@@ -2620,9 +2605,9 @@ summary:focus-visible {
 .unslop-label {
   font-family: var(--font-mono);
   font-size: 11px;
-  letter-spacing: 0.07em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #8c897c;
+  color: var(--mute);
 }
 
 .unslop-topic-chips {
@@ -2638,44 +2623,44 @@ summary:focus-visible {
 }
 
 .unslop-topic-chip {
-  background: var(--carbon-700);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  color: #bbb8aa;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--mute);
   padding: 8px 4px;
   font-family: var(--font-mono);
   font-size: 11px;
-  border-radius: 4px;
+  border-radius: 2px;
   cursor: pointer;
   text-align: center;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, color 120ms ease;
 }
 
 .unslop-topic-chip:hover:not(:disabled) {
-  border-color: var(--gold-border);
-  color: #f7f7f5;
+  border-color: var(--gold);
+  color: var(--ink);
 }
 
 .unslop-topic-chip.selected {
-  background: rgba(212, 175, 55, 0.15);
-  border-color: var(--gold-primary);
-  color: var(--gold-bright);
+  background: var(--bg2);
+  border-color: var(--gold);
+  color: var(--gold);
   font-weight: 700;
 }
 
 .unslop-btn-gold {
-  background: var(--gold-primary);
-  color: #08080a;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.06em;
+  background: var(--gold);
+  color: #12291c;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   padding: 14px 20px;
-  border-radius: 5px;
+  border-radius: 2px;
   cursor: pointer;
-  border: 1px solid var(--gold-bright);
-  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.25);
-  transition: background 140ms ease, transform 120ms ease, box-shadow 140ms ease;
+  border: 1px solid var(--gold);
+  box-shadow: none;
+  transition: opacity 120ms ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2683,51 +2668,44 @@ summary:focus-visible {
 }
 
 .unslop-btn-gold:hover:not(:disabled) {
-  background: var(--gold-bright);
-  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.4);
-  transform: translateY(-1px);
-}
-
-.unslop-btn-gold:active:not(:disabled) {
-  transform: translateY(0);
+  opacity: 0.92;
 }
 
 .unslop-btn-gold:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
-  box-shadow: none;
 }
 
 .unslop-join-section {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--line);
   padding-top: 18px;
 }
 
 .unslop-input-code {
-  background: #08080a;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  color: var(--gold-bright);
+  background: #0e2216;
+  border: 1px solid var(--line);
+  color: var(--gold);
   font-family: var(--font-mono);
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.28em;
   padding: 12px 16px;
-  border-radius: 4px;
+  border-radius: 2px;
   text-transform: uppercase;
   outline: none;
-  transition: border-color 140ms ease, box-shadow 140ms ease;
 }
 
 .unslop-input-code:focus {
-  border-color: var(--gold-primary);
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.18);
+  border-color: var(--gold);
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
 }
 
 .unslop-input-code::placeholder {
-  color: #3f3e37;
+  color: #3f684e;
   letter-spacing: 0.2em;
 }
 
@@ -2739,26 +2717,58 @@ summary:focus-visible {
 
 .unslop-btn-outline {
   background: transparent;
-  border: 1px solid var(--gold-border);
-  color: var(--gold-primary);
-  font-family: var(--font-mono);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.05em;
+  font-size: 13px;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   padding: 12px 14px;
-  border-radius: 5px;
+  border-radius: 2px;
   cursor: pointer;
-  transition: all 120ms ease;
+  transition: border-color 120ms ease, color 120ms ease;
 }
 
 .unslop-btn-outline:hover:not(:disabled) {
-  background: rgba(212, 175, 55, 0.1);
-  border-color: var(--gold-bright);
-  color: var(--gold-bright);
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 .unslop-btn-outline:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
+}
+
+/* Hard flat override: 2px radius and no shadow */
+.surface-card, .room-panel, .statement-card, .test-card, .leader-card, .stats-panel, .input, .select, .button, .sidebar-link {
+  border-radius: 2px !important;
+  box-shadow: none !important;
+}
+
+.button-primary {
+  background: var(--gold) !important;
+  color: #12291c !important;
+  border-color: var(--gold) !important;
+}
+
+.sidebar {
+  background: var(--bg2) !important;
+  backdrop-filter: none !important;
+}
+
+.brand-mark {
+  border-radius: 2px !important;
+  border-color: var(--line) !important;
+  background: var(--bg) !important;
+  color: var(--gold) !important;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--gold) !important;
+  outline-offset: 1px !important;
 }
